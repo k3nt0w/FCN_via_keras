@@ -54,7 +54,7 @@ def make_target_dataset(imgs):
     moniter = np.asarray([128,64,0])#20
 
     for imgname in imgs:
-        path = "/Users/kento_watanabe/Desktop/work/fcn/target_voc2012_seg_224/"
+        path = "/Users/kento_watanabe/Desktop/data_for_fcn/target_voc2012_seg_224/"
         path_to_target = path + imgname + ".png"
         target_img = cv2.imread(path_to_target)
         dim = target_img.shape
@@ -104,8 +104,8 @@ def make_target_dataset(imgs):
                 elif np.allclose(color, moniter):
                     target[x,y] = 20
                 else:
-                    target[x,y] = -1
-        np.save("seg_npys/{}.npy".format(imgname),target)
+                    target[x,y] = 0
+        np.save("/Users/kento_watanabe/Desktop/data_for_fcn/npy_target_224_voc12/{}.npy".format(imgname),target)
         print("Done {}".format(imgname))
 
 def split_n_data(n):
@@ -116,9 +116,10 @@ def split_n_data(n):
 
 def multi_process():
     pool = Pool(processes=3)
-    result_data = [None for i in range(3)]
+    #result_data = [None for i in range(3)]
     split_data = split_n_data(3)
     pool.map(make_target_dataset, split_data)
 
 if __name__ == "__main__":
+    ls = [line.rstrip('\n') for line in open(filename,"r").readlines()]
     multi_process()
