@@ -1,4 +1,4 @@
-import fcn_keras as fk
+from model import create_model
 
 from keras.models import model_from_json
 import cv2
@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def predict(img_path):
-    model = fk.create_model()
+    model = create_model()
     model.compile(loss="categorical_crossentropy",
                   optimizer='adadelta',
                   metrics=["accuracy"])
