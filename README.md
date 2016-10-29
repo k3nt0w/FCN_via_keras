@@ -12,14 +12,18 @@ FCN (Fully Convolutional Network) is deep fully convolutional neural network arc
 ## Caution
 
 私は普段からバックエンドにtensorflowを使っているので、あとで気づいたのですが、theanoだと動かないみたいです。もしこんなクソコードでも参考にしてくれる人がいるならば、バックエンドはtensorflowを指定して実行してください。
+
 """
 KERAS_BACKEND=tensorflow python train.py
 """
+
 上のようにoptionを設定すれば大丈夫です。  
 時間があれば、theanoでもちゃんと動くように直したいとおもいます。また根本的に間違っているかもしれないので原因がわかる方はこちらの[ブログ](http://ket-30.hatenablog.com)にコメントしていただくと、ありがたいです。
 
 Please use tensorflow as backend when you use this code because this couldn't work on theano backend. You can change backend by writing like this.
+
 """
 KERAS_BACKEND=tensorflow python train.py
 """
+
 I'm trying debug now. I update this code if I get factor of that.
