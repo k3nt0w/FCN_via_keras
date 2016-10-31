@@ -15,4 +15,4 @@ FCN (Fully Convolutional Network) is deep fully convolutional neural network arc
 
 時間があれば、tensorflowでもちゃんと動くように直したいとおもいます。また根本的に間違っているかもしれないので原因がわかる方はこちらの[ブログ](http://ket-30.hatenablog.com)にコメントしていただくと、ありがたいです。
 
-Please use theano as backend when you use this code because this couldn't work on theano backend. I'm trying debug now. I update this code if I get factor of that.
+Please use theano as backend when you use this code because this couldn't work on tensorflow backend. I'm trying debug now. I update this code if I get factor of that.
