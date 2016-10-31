@@ -18,7 +18,6 @@ def generate_arrays_from_file(path):
             img, target = process_line(name)
             yield (img, target)
 
-
 def process_line(name):
     path_to_train = "/Users/kento_watanabe/Desktop/data_for_fcn/train_voc2012_seg_224/"
     path_to_target = "/Users/kento_watanabe/Desktop/data_for_fcn/npy_target_224_voc12/"
@@ -26,14 +25,7 @@ def process_line(name):
     img = img.astype('float32')
     img /= 255
     img = img.reshape((1,3,224,224))
-
     target = np.load(path_to_target+ name +".npy")
     target = np.asarray(binarylab(target))
     target = target.reshape((1,224*224,21))
-
     return img, target
-
-if __name__ == "__main__":
-    #test
-    a = generate_arrays_from_file("./train.txt")
-    print(a)

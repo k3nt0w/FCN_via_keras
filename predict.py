@@ -3,7 +3,6 @@ from model import create_model
 from keras.models import model_from_json
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 
 def predict(img_path):
     model = create_model()
@@ -11,7 +10,6 @@ def predict(img_path):
                   optimizer='adadelta',
                   metrics=["accuracy"])
     model.load_weights("weights.hdf5")
-    #model.load_weights("test_model_weight.hdf5")
 
     path_to_train = "/Users/kento_watanabe/Desktop/data_for_fcn/train_voc2012_seg_224/"
     data = cv2.imread(path_to_train+"2011_003255.jpg")
@@ -21,7 +19,6 @@ def predict(img_path):
 
     output = model.predict_on_batch(data)
     output = np.argmax(output[0],axis=1).reshape((224,224))
-    print(output)
     return output
 
 def visualize(output, plot=True):

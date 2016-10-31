@@ -4,21 +4,22 @@ from data import generate_arrays_from_file
 from keras.models import model_from_json
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+import os
 
-def train(test=False):
+import os
+os.environ['KERAS_BACKEND'] = 'theano'
+#for using gpu
+#os.environ['THEANO_FLAGS']='mode=FAST_RUN,device=gpu0,floatX=float32,optimizer=fast_compile'
+
+def train(path):
     model = create_model()
     model.compile(loss="categorical_crossentropy",
                   optimizer='adadelta',
                   metrics=["accuracy"])
-    model.fit_generator(generate_arrays_from_file('./train.txt'),
-        samples_per_epoch=1400, nb_epoch=100)
+    model.fit_generator(generate_arrays_from_file(path),
+        samples_per_epoch=20, nb_epoch=15)
     model.save_weights('weights.hdf5')
     return
 
-def make_graph(history):
-    pass
-
 if __name__ == "__main__":
-    #train(test=True)
-    train()
+    train('./train.txt')
