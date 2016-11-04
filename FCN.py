@@ -9,7 +9,7 @@ from keras import backend as K
 import cv2
 import numpy as np
 
-def create_model():
+def FCN():
 
     FCN_CLASSES = 21
 
@@ -87,6 +87,6 @@ def to_json(model):
         f.write(json_string)
 
 if __name__ == "__main__":
-    model = create_model()
+    model = FCN()
     #visualize_model(model)
     #to_json(model)

@@ -1,18 +1,20 @@
-from model import create_model
+from FCN import FCN
+from DeconvNetModel import DeconvNet
 
 from keras.models import model_from_json
 import cv2
 import numpy as np
 
-def predict(img_path):
-    model = create_model()
+def predict(imgname, model_name):
+    model_dec = { "FCN" : FCN, "DeconvNet" : DeconvNet}
+    model = model_dec[model_name]()
     model.compile(loss="categorical_crossentropy",
                   optimizer='adadelta',
                   metrics=["accuracy"])
-    model.load_weights("weights.hdf5")
+    model.load_weights("weights_of_{}.hdf5".format(model_name))
 
     path_to_train = "/Users/kento_watanabe/Desktop/data_for_fcn/train_voc2012_seg_224/"
-    data = cv2.imread(path_to_train+"2011_003255.jpg")
+    data = cv2.imread(path_to_train+imgname+".jpg")
     data = data.astype('float32')
     data /= 255
     data = data.reshape((1,3,224,224))
@@ -21,7 +23,7 @@ def predict(img_path):
     output = np.argmax(output[0],axis=1).reshape((224,224))
     return output
 
-def visualize(output, plot=True):
+def visualize(output, imgname, plot=True):
     background = np.asarray([255,255,255])#0
     airplane = np.asarray([0,0,128])#1
     bicycle = np.asarray([0,128,0])#2
@@ -53,7 +55,7 @@ def visualize(output, plot=True):
     for h,tmp in enumerate(output):
         for w,label in enumerate(tmp):
             img[h,w] = label_colors[label]
-    cv2.imwrite("result.jpg",img)
+    cv2.imwrite(imgname+"result.jpg",img)
     return
 
 def test():
@@ -64,5 +66,6 @@ def test():
     return
 
 if __name__ == "__main__":
-    visualize(predict("path"))
+    visualize(predict("2011_003151","DeconvNet"), "2011_003151")
+    #visualize(predict("2011_003216"), "2011_003216")
     #test()

@@ -120,6 +120,20 @@ def multi_process():
     split_data = split_n_data(3)
     pool.map(make_target_dataset, split_data)
 
+def crop_img(imgpath):
+    img = cv2.imread(imgpath)
+    shape = img.shape[:-1]
+    shorter = shape[0] if shape[0] < shape[1] else shape[1]
+    length = int(shorter/2)
+    xc, yc = int(shape[0]/2), int(shape[1]/2)
+    train_img = img[xc-length:xc+length, yc-length:yc+length]
+    target_img = img[xc-length:xc+length, yc-length:yc+length]
+    train_img = cv2.resize(train_img,(224,224))
+    target_img = cv2.resize(target_img,(224,224))
+    cv2.imwrite('./demo_img/cropped.jpg'.format(imgname), img)
+
+
 if __name__ == "__main__":
-    ls = [line.rstrip('\n') for line in open(filename,"r").readlines()]
-    multi_process()
+    #ls = [line.rstrip('\n') for line in open(filename,"r").readlines()]
+    #multi_process()
+    crop_img()
