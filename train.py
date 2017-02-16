@@ -57,7 +57,7 @@ pred = model.predict(X)[0]
 print(pred[0,0,:].sum())
 print(pred[0,0,:])
 """
-model.fit_generator(generate_arrays_from_file(names,path_to_train,path_to_target),
+model.fit_generator(generate_arrays_from_file(names,path_to_train,path_to_target,img_size),
                     samples_per_epoch=nb_data,
                     nb_epoch=args.epoch)
 if not os.path.exists("./weight"):
