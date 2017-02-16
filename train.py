@@ -38,9 +38,8 @@ nb_data = len(names)
 
 FCN = FullyConvolutionalNetwork(img_height=img_size, img_width=img_size, FCN_CLASSES=nb_class)
 adam = Adam(lr=args.lr)
-model = FCN.create_model()
-
-model.compile(loss=categorical_crossentropy2D, optimizer='adam')
+train_model, fcn = FCN.create_model(train_flag=True)
+train_model.compile(loss="categorical_crossentropy", optimizer='adam')
 if len(args.weight):
     model.load_weights(args.weight, model)
 print("Num data: {}".format(nb_data))
@@ -57,10 +56,10 @@ pred = model.predict(X)[0]
 print(pred[0,0,:].sum())
 print(pred[0,0,:])
 """
-model.fit_generator(generate_arrays_from_file(names,path_to_train,path_to_target,img_size, nb_class),
+train_model.fit_generator(generate_arrays_from_file(names,path_to_train,path_to_target,img_size, nb_class),
                     samples_per_epoch=nb_data,
                     nb_epoch=args.epoch)
 if not os.path.exists("./weight"):
     os.mkdir("./weight")
 
-#model.save_weights('./weight"/fcn_params')
+fcn.save_weights('./weight"/fcn_params')

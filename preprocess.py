@@ -28,7 +28,7 @@ def load_data(path, size, label=True):
         y[mask] = 0
         y = binarylab(y, size, 21)
         y = np.expand_dims(y, axis=0)
-
+        y = y.reshape((1,size*size,21))
         return y
     else:
         X = image.img_to_array(img)

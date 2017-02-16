@@ -36,7 +36,7 @@ class FullyConvolutionalNetwork():
                            input_tensor=None,
                            input_shape=(self.img_height, self.img_width, 3))
 
-    def create_model(self):
+    def create_model(self, train_flag=True):
         #(samples, channels, rows, cols)
         ip = Input(shape=(self.img_height, self.img_width, 3))
         h = self.vgg16.layers[1](ip)
@@ -100,13 +100,20 @@ class FullyConvolutionalNetwork():
         """
         h = UpSampling2D((8, 8))(h)
         h = Convolution2D(self.FCN_CLASSES, 3, 3, activation='relu', border_mode='same')(h)
+        h = Softmax2D()(h)
+        fcn = Model(ip, h)
 
-        out = Softmax2D()(h)
-        model = Model(ip, out)
-        return model
+        if not train_flag:
+            return fcn
+
+        h = Reshape((self.FCN_CLASSES,self.img_height*self.img_width))(h)
+        h = Permute((2,1))(h)
+        out = Activation("softmax")(h)
+        train_model = Model(ip, out)
+        return train_model, fcn
 
 if __name__ == "__main__":
     from keras.utils.visualize_util import model_to_dot, plot
     FCN = FullyConvolutionalNetwork()
-    model = FCN.create_model()
+    model, _ = FCN.create_model()
     plot(model, to_file='FCN_model.png',show_shapes=True)

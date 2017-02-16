@@ -6,8 +6,8 @@ import numpy as np
 
 def predict():
     FCN = FullyConvolutionalNetwork()
-    model = FCN.create_model()
-    #model.load_weights("weights_of_{}.hdf5".format(model_name))
+    model = FCN.create_model(train_flag=False)
+    model.load_weights("./weight/fcn_params")
     X = load_data("demo_imgs/X1.jpg", 224, label=False)
     pred = model.predict(X)[0]
     pred = pred.argmax(axis=-1).astype(np.int32)
