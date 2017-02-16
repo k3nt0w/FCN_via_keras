@@ -110,7 +110,7 @@ class FullyConvolutionalNetwork():
         h = Permute((2,1))(h)
         out = Activation("softmax")(h)
         train_model = Model(ip, out)
-        return train_model, fcn
+        return train_model
 
 if __name__ == "__main__":
     from keras.utils.visualize_util import model_to_dot, plot
