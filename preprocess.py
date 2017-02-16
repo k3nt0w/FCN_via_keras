@@ -26,7 +26,7 @@ def load_data(path, size, label=True):
         y = np.array(img, dtype=np.int32)
         mask = y == 255
         y[mask] = 0
-        y = binarylab(y, size, nb_class)
+        y = binarylab(y, size, 21)
         y = np.expand_dims(y, axis=0)
 
         return y
