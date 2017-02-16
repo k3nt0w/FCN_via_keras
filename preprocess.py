@@ -36,7 +36,7 @@ def load_data(path, size, label=True):
         X = preprocess_input(X)
         return X
 
-def generate_arrays_from_file(names, path_to_train, path_to_target, img_size):
+def generate_arrays_from_file(names, path_to_train, path_to_target, img_size, nb_class):
     while True:
         for name in names:
             Xpath = path_to_train + "{}.jpg".format(name)
