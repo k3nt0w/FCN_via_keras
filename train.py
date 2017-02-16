@@ -6,11 +6,8 @@ from preprocess import *
 
 import argparse
 
-
 from keras.optimizers import Adam
 from keras import backend as K
-
-
 
 parser = argparse.ArgumentParser(description='FCN via Keras')
 parser.add_argument('--train_dataset', '-tr', default='dataset', type=str)
@@ -60,7 +57,7 @@ pred = model.predict(X)[0]
 print(pred[0,0,:].sum())
 print(pred[0,0,:])
 """
-model.fit_generator(generate_arrays_from_file(names),
+model.fit_generator(generate_arrays_from_file(names,path_to_train,path_to_target),
                     samples_per_epoch=nb_data,
                     nb_epoch=args.epoch)
 if not os.path.exists("./weight"):
