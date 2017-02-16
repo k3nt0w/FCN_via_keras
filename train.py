@@ -28,10 +28,6 @@ path_to_train = args.train_dataset
 path_to_target = args.target_dataset
 path_to_txt = args.txtfile
 
-
-def categorical_crossentropy2D(y_true, y_pred):
-    return -K.sum(y_true * K.log(y_pred))
-
 with open(path_to_txt,"r") as f:
     ls = f.readlines()
 names = [l.rstrip('\n') for l in ls]
@@ -45,23 +41,9 @@ if len(args.weight):
     model.load_weights(args.weight, model)
 print("Num data: {}".format(nb_data))
 
-"""
-#test
-Xpath = "demo_imgs/X1.jpg"
-ypath = "demo_imgs/y1.png"
-X = load_data(Xpath, 224, label=False)
-y = load_data(ypath, 224, label=True)
-model.fit(X,y)
-
-pred = model.predict(X)[0]
-print(pred[0,0,:].sum())
-print(pred[0,0,:])
-"""
 train_model.fit_generator(generate_arrays_from_file(names,path_to_train,path_to_target,img_size, nb_class),
                     samples_per_epoch=nb_data,
                     nb_epoch=args.epoch)
-
-
 
 if not os.path.exists("weights"):
     os.makedirs("weights")

@@ -100,11 +100,9 @@ class FullyConvolutionalNetwork():
         """
         h = UpSampling2D((8, 8))(h)
         h = Convolution2D(self.FCN_CLASSES, 3, 3, activation='relu', border_mode='same')(h)
-        h = Softmax2D()(h)
-        fcn = Model(ip, h)
 
         if not train_flag:
-            return fcn
+            return Model(ip, h)
 
         h = Reshape((self.FCN_CLASSES,self.img_height*self.img_width))(h)
         h = Permute((2,1))(h)
