@@ -14,9 +14,7 @@ $ python train.py -tr <path to train dataset> -ta <path to target dataset> -tt <
 #### Example
 ```
 $ python train.py
--tr /Volumes/DATASET2/VOCdevkit/VOC2012/JPEGImages/
--ta /Volumes/DATASET2/VOCdevkit/VOC2012/SegmentationClass/
--t train.txt
+-tr /Volumes/DATASET2/VOCdevkit/VOC2012/JPEGImages/ -ta /Volumes/DATASET2/VOCdevkit/VOC2012/SegmentationClass/ -t train.txt
 ```
 ### predict
 ```
@@ -24,10 +22,9 @@ $ pyton predict.py -i <path to image>
 ```
 #### Example
 ```
-$ python train.py
--i demo_imgs/2011_003255.jpg
+$ python train.py -i demo_imgs/2011_003255.jpg
 ```
 
 ## Caution
 
-Please use theano as backend when you use this code because this couldn't work on tensorflow backend. I'm trying debug now. I update this code if I get factor of that.
+Please use theano as backend  because this couldn't work on tensorflow backend. I'm trying debug now. I update this code if I get factor of that.
