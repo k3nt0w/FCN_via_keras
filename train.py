@@ -1,5 +1,5 @@
 import os
-os.environ['KERAS_BACKEND'] = 'tensorflow'
+os.environ['KERAS_BACKEND'] = 'theano'
 
 from model import FullyConvolutionalNetwork
 from preprocess import *
@@ -9,6 +9,9 @@ import h5py
 
 from keras.optimizers import Adam
 from keras import backend as K
+
+def crossentropy(y_true, y_pred):
+    return -K.sum(y_true*K.log(y_pred))
 
 parser = argparse.ArgumentParser(description='FCN via Keras')
 parser.add_argument('--train_dataset', '-tr', default='dataset', type=str)
@@ -36,7 +39,7 @@ nb_data = len(names)
 FCN = FullyConvolutionalNetwork(img_height=img_size, img_width=img_size, FCN_CLASSES=nb_class)
 adam = Adam(lr=args.lr)
 train_model = FCN.create_model(train_flag=True)
-train_model.compile(loss="categorical_crossentropy", optimizer='adam')
+train_model.compile(loss=crossentropy, optimizer='adam')
 if len(args.weight):
     model.load_weights(args.weight, model)
 print("Num data: {}".format(nb_data))

@@ -4,13 +4,13 @@ from keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
 from keras.preprocessing import image
 
 def binarylab(labels, size, nb_class):
-    y = np.zeros((size,size,nb_class))
+    y = np.zeros((nb_class,size,size))
     for i in range(size):
         for j in range(size):
-            y[i, j, labels[i][j]] = 1
+            y[labels[i][j],i, j] = 1
     return y
 
-def load_data(path, size, label=True):
+def load_data(path, size=224, mode=None):
     img = Image.open(path)
     w,h = img.size
     if w < h:
@@ -22,15 +22,17 @@ def load_data(path, size, label=True):
             img = img.resize((size*w//h, size))
             w, h = img.size
     img = img.crop((int((w-size)*0.5), int((h-size)*0.5), int((w+size)*0.5), int((h+size)*0.5)))
-    if label:
+    if mode=="original":
+        return img
+
+    if mode=="label":
         y = np.array(img, dtype=np.int32)
         mask = y == 255
         y[mask] = 0
         y = binarylab(y, size, 21)
         y = np.expand_dims(y, axis=0)
-        y = y.reshape((1,size*size,21))
         return y
-    else:
+    if mode=="data":
         X = image.img_to_array(img)
         X = np.expand_dims(X, axis=0)
         X = preprocess_input(X)
