@@ -13,8 +13,7 @@ $ python train.py -tr <path to train dataset> -ta <path to target dataset> -tt <
 ```
 #### Example
 ```
-$ python train.py
--tr /Volumes/DATASET2/VOCdevkit/VOC2012/JPEGImages/ -ta /Volumes/DATASET2/VOCdevkit/VOC2012/SegmentationClass/ -t train.txt
+$ python train.py -tr /Volumes/DATASET2/VOCdevkit/VOC2012/JPEGImages/ -ta /Volumes/DATASET2/VOCdevkit/VOC2012/SegmentationClass/ -t train.txt
 ```
 ### predict
 ```
