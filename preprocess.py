@@ -43,6 +43,6 @@ def generate_arrays_from_file(names, path_to_train, path_to_target, img_size, nb
         for name in names:
             Xpath = path_to_train + "{}.jpg".format(name)
             ypath = path_to_target + "{}.png".format(name)
-            X = load_data(Xpath, img_size, label=False)
-            y = load_data(ypath, img_size, label=True)
+            X = load_data(Xpath, img_size, mode="data")
+            y = load_data(ypath, img_size, mode="label")
             yield (X, y)
